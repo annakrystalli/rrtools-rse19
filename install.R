@@ -1,6 +1,8 @@
 #'  install required packages 
-install.packages('tinytex')
-tinytex::install_tinytex()
+#'  
+#'  --- ONLY USE if you don't have LaTeX
+# install.packages('tinytex')
+# tinytex::install_tinytex()
 
 
 install.packages(c(
