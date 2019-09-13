@@ -1,8 +1,8 @@
 ---
-title: "Reproducible Research w/ rrtools"
+title: "Reproducible Research in R \n  w/ rrtools"
 subtitle: "harnessing the power of convention ✨"
-author: "Anna Krystalli"
-date: "RSE Conference, 17th September 2019"
+author: "_Anna Krystalli_"
+date: "_3rd UK RSE Conference, 2019-09-17_"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -34,7 +34,7 @@ mono_accent_inverse(
     + github **@annakrystalli**
     + email **a.krystalli[at]sheffield.ac.uk**
     
-- **Editor [rOpenSci](http://onboarding.ropensci.org/)**
+- **Editor** [*rOpenSci*](http://onboarding.ropensci.org/)
 
 ---
 
@@ -79,8 +79,13 @@ collection**."
 
 --
 
+***
+
 .center[
-<img src="assets/package_friends.png" height=250px>
+
+### `r emo::ji("sparkles") `Harnessing the power of Convention! `r emo::ji("sparkles")`
+
+<img src="assets/package_friends.png" height=200px>
 ]
 
 .img-attr[slides: [_Karthik Ram: rstudio::conf 2019 talk_](https://github.com/karthik/rstudio2019)]
@@ -90,11 +95,13 @@ collection**."
 
 > The goal of rrtools is to provide **instructions, templates, and functions** for making a **basic compendium** suitable for writing **reproducible research with R**.
 
+> [_github.com/benmarwick/rrtools_](https://github.com/benmarwick/rrtools)
+
 --
 
 # `rrtools` demo
 
-### **Create a research compendium** and **recreate a research paper** from **data, analysis code and text**.
+#### **Create a research compendium** and **recreate a research paper** from **data, analysis code and text** using `rrtools` and friends (eg `usethis`).
 
 ---
 
@@ -115,8 +122,184 @@ accompanying the publication:
 ]
 
 ---
-### demo materials - access
+class: inverse, center, middle
+
+# (Semi-) Live demo
+
+### In the interest of time, some copying & pasting will be used
+
+
+---
+class: inverse, center, middle
+
+# Skipped setup
+
+---
+
+### install LaTeX
+Only required if you don't have LaTeX installed
+```{r, eval = FALSE}
+install.packages('tinytex')
+tinytex::install_tinytex()
+```
+
+#### On Windows
+
+You might need to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/)
+
+
+---
+
+### installed workflow dependencies
+
+
+```
+source("install.R")
+```
+
+```{r, eval = FALSE}
+install.packages(c(
+    # accesing remote repositories
+    "remotes",
+    #' analysis
+    "dplyr", "ggplot2", "ggthemes", "here",
+    #' bibliographic / publishing
+    "citr", "rticles",
+    #' documentation
+    "roxygen2",
+    #' graphics
+    "Cairo"))
+```
+
+### installed `rrtools`
+
+```{r, eval=FALSE}
+remotes::install_github("benmarwick/rrtools")
+```
+
+---
+
+##  Got materials 
+```r
+usethis::use_course("bit.ly/rrtools_wks")
+```
+
+```
+~/Desktop/rrtools-wkshp-materials-master/
+├── README.md
+├── analysis.R
+├── gillespie.csv
+├── paper.pdf
+├── paper.txt
+└── refs.bib
+
+```
+
+
+---
+## Opened Rstudio
+
+in project [`rrtools-rse19`](https://github.com/annakrystalli/rrtools-rse19)
+
+### loaded some libraries
+```r
+library(rrtools)
+library(usethis)
+library(testthat)
+```
+
+
+---
+class: inverse, center, middle
+
+# Relevant global user settings
+
+---
+
+## `.Rprofile`
+
+```r
+usethis::edit_r_profile()
+```
+
+```r
+options(usethis.full_name = "Anna Krystalli",
+        servr.daemon = TRUE,
+        pkgType = "binary",
+        usethis.description = 
+            list(`Authors@R` = 
+                    'person(
+                        given = "Anna",
+                        family = "Krystalli",
+                        role = c("aut", "cre"),
+                        email = "annakrystalli@googlemail.com",
+                        comment = c(ORCID = "0000-0002-2378-4915"))',
+                 Version = "0.0.0.9000"
+            ),
+        usethis.protocol  = "https"
+)
+```
+
+---
+## `.Renviron`
+
+Get GitHub PAT
+```r
+usethis::browse_github_pat()
+✔ Opening URL 'https://github.com/settings/tokens/new?scopes=repo,gist&description=R:GITHUB_PAT'
+● Call `usethis::edit_r_environ()` to open '.Renviron'.
+● Store your PAT with a line like:
+  GITHUB_PAT=xxxyyyzzz
+  [Copied to clipboard]
+● Make sure '.Renviron' ends with a newline!
+```
+### Edit file
+
+```r
+usethis::edit_r_environ()
+```
+
+```bash
+GITHUB_PAT=f0f766313811965a5064174bd919bc770e067ce6
+
+```
+
+_Not this one_ `r emo::ji("wink")`
+
+---
+class: inverse, center, middle
+
+# Let's go! `r emo::ji("checkered_flag")`
+
+
+---
+
+# Demo Links
+
+.pull-left[
+### demo materials
 
 #### [bit.ly/rrtools_wks](https:bit.ly/rrtools_wks)
 
 ### workflow code
+
+#### [bit.ly/rrtools-workflow](http://bit.ly/rrtools-workflow)
+]
+
+.pull-right[
+### `rrtools` GH repo
+#### [benmarwick/rrtools](https://github.com/benmarwick/rrtools)
+
+### walkthrough GH repo
+#### [annakrystalli/rrtools-rse19](https://github.com/annakrystalli/rrtools-rse19)
+]
+
+### outputs
+
+- [Example compendium `rrcompendiumRSE19`](https://github.com/annakrystalli/rrcompendiumRSE19)
+- [Example Docker image of compendium](https://hub.docker.com/r/akrystalli/rrcompendiumrse19/tags)
+
+---
+class: inverse, center, middle
+
+# Thanks for `r emo::ji("eyes")` `r emo::ji("wave")`

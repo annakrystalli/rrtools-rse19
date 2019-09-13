@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
   <head>
-    <title>Reproducible Research w/ rrtools</title>
+    <title>Reproducible Research in R w/ rrtools</title>
     <meta charset="utf-8" />
     <meta name="author" content="Anna Krystalli" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
@@ -10,10 +10,10 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Reproducible Research w/ rrtools
+# Reproducible Research in R w/ rrtools
 ## harnessing the power of convention ✨
-### Anna Krystalli
-### RSE Conference, 17th September 2019
+### <em>Anna Krystalli</em>
+### <em>3rd UK RSE Conference, 2019-09-17</em>
 
 ---
 
@@ -31,7 +31,7 @@ class: center, middle, inverse, title-slide
     + github **@annakrystalli**
     + email **a.krystalli[at]sheffield.ac.uk**
     
-- **Editor [rOpenSci](http://onboarding.ropensci.org/)**
+- **Editor** [*rOpenSci*](http://onboarding.ropensci.org/)
 
 ---
 
@@ -76,8 +76,13 @@ collection**."
 
 --
 
+***
+
 .center[
-&lt;img src="assets/package_friends.png" height=250px&gt;
+
+### ✨Harnessing the power of Convention! ✨
+
+&lt;img src="assets/package_friends.png" height=200px&gt;
 ]
 
 .img-attr[slides: [_Karthik Ram: rstudio::conf 2019 talk_](https://github.com/karthik/rstudio2019)]
@@ -87,11 +92,13 @@ collection**."
 
 &gt; The goal of rrtools is to provide **instructions, templates, and functions** for making a **basic compendium** suitable for writing **reproducible research with R**.
 
+&gt; [_github.com/benmarwick/rrtools_](https://github.com/benmarwick/rrtools)
+
 --
 
 # `rrtools` demo
 
-### **Create a research compendium** and **recreate a research paper** from **data, analysis code and text**.
+#### **Create a research compendium** and **recreate a research paper** from **data, analysis code and text** using `rrtools` and friends (eg `usethis`).
 
 ---
 
@@ -112,11 +119,190 @@ accompanying the publication:
 ]
 
 ---
-### demo materials - access
+class: inverse, center, middle
+
+# (Semi-) Live demo
+
+### In the interest of time, some copying &amp; pasting will be used
+
+
+---
+class: inverse, center, middle
+
+# Skipped setup
+
+---
+
+### install LaTeX
+Only required if you don't have LaTeX installed
+
+```r
+install.packages('tinytex')
+tinytex::install_tinytex()
+```
+
+#### On Windows
+
+You might need to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/)
+
+
+---
+
+### installed workflow dependencies
+
+
+```
+source("install.R")
+```
+
+
+```r
+install.packages(c(
+    # accesing remote repositories
+    "remotes",
+    #' analysis
+    "dplyr", "ggplot2", "ggthemes", "here",
+    #' bibliographic / publishing
+    "citr", "rticles",
+    #' documentation
+    "roxygen2",
+    #' graphics
+    "Cairo"))
+```
+
+### installed `rrtools`
+
+
+```r
+remotes::install_github("benmarwick/rrtools")
+```
+
+---
+
+##  Got materials 
+```r
+usethis::use_course("bit.ly/rrtools_wks")
+```
+
+```
+~/Desktop/rrtools-wkshp-materials-master/
+├── README.md
+├── analysis.R
+├── gillespie.csv
+├── paper.pdf
+├── paper.txt
+└── refs.bib
+
+```
+
+
+---
+## Opened Rstudio
+
+in project [`rrtools-rse19`](https://github.com/annakrystalli/rrtools-rse19)
+
+### loaded some libraries
+```r
+library(rrtools)
+library(usethis)
+library(testthat)
+```
+
+
+---
+class: inverse, center, middle
+
+# Relevant global user settings
+
+---
+
+## `.Rprofile`
+
+```r
+usethis::edit_r_profile()
+```
+
+```r
+options(usethis.full_name = "Anna Krystalli",
+        servr.daemon = TRUE,
+        pkgType = "binary",
+        usethis.description = 
+            list(`Authors@R` = 
+                    'person(
+                        given = "Anna",
+                        family = "Krystalli",
+                        role = c("aut", "cre"),
+                        email = "annakrystalli@googlemail.com",
+                        comment = c(ORCID = "0000-0002-2378-4915"))',
+                 Version = "0.0.0.9000"
+            ),
+        usethis.protocol  = "https"
+)
+```
+
+---
+## `.Renviron`
+
+Get GitHub PAT
+```r
+usethis::browse_github_pat()
+✔ Opening URL 'https://github.com/settings/tokens/new?scopes=repo,gist&amp;description=R:GITHUB_PAT'
+● Call `usethis::edit_r_environ()` to open '.Renviron'.
+● Store your PAT with a line like:
+  GITHUB_PAT=xxxyyyzzz
+  [Copied to clipboard]
+● Make sure '.Renviron' ends with a newline!
+```
+### Edit file
+
+```r
+usethis::edit_r_environ()
+```
+
+```bash
+GITHUB_PAT=f0f766313811965a5064174bd919bc770e067ce6
+
+```
+
+_Not this one_ 😉
+
+---
+class: inverse, center, middle
+
+# Let's go! 🏁
+
+
+---
+
+# Demo Links
+
+.pull-left[
+### demo materials
 
 #### [bit.ly/rrtools_wks](https:bit.ly/rrtools_wks)
 
 ### workflow code
+
+#### [bit.ly/rrtools-workflow](http://bit.ly/rrtools-workflow)
+]
+
+.pull-right[
+### `rrtools` GH repo
+#### [benmarwick/rrtools](https://github.com/benmarwick/rrtools)
+
+### walkthrough GH repo
+#### [annakrystalli/rrtools-rse19](https://github.com/annakrystalli/rrtools-rse19)
+]
+
+### outputs
+
+- [Example compendium `rrcompendiumRSE19`](https://github.com/annakrystalli/rrcompendiumRSE19)
+- [Example Docker image of compendium](https://hub.docker.com/r/akrystalli/rrcompendiumrse19/tags)
+
+---
+class: inverse, center, middle
+
+# Thanks for 👀 👋
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
