@@ -8,3 +8,4 @@ resources/*.tex
 resources/*.spl
 resources/*.fff
 .DS_Store
+analysis/*
