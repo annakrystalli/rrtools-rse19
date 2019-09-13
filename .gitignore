@@ -3,3 +3,8 @@
 .RData
 .Ruserdata
 *_files
+resources/*.pdf
+resources/*.tex
+resources/*.spl
+resources/*.fff
+.DS_Store
