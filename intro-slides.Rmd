@@ -1,12 +1,11 @@
 ---
-title: "Reproducible Research in R \n  w/ rrtools"
-subtitle: "harnessing the power of convention ✨"
-author: "_Anna Krystalli_"
-date: "_3rd UK RSE Conference, 2019-09-17_"
+title: "Reproducible Research in R w/ .backtick[rrtools]"
+subtitle: ".small.white[Harnessing the power of Convention] \n\n ## `r emo::ji('sparkles')`"
+author: ".left.small.white[_Anna Krystalli &nbsp;`r anicon::faa('twitter', animate='float', rtext='@annakrystalli')` \n\n .left[3rd UK RSE Conference, 2019-09-17]_]"
 output:
   xaringan::moon_reader:
     lib_dir: libs
-    css: xaringan-themer.css
+    css: [xaringan-themer.css, assets/custom.css]
     nature:
       highlightStyle: github
       highlightLines: true
@@ -15,11 +14,13 @@ output:
 
 ```{r xaringan-themer, include = FALSE}
 library(xaringanthemer)
+
 mono_accent_inverse(
   base_color = "#3C989E",
   header_font_google = google_font("Gayathri", "700"),
   text_font_google   = google_font("Montserrat", "300", "300i"),
-  code_font_google   = google_font("Source Code Pro")
+  code_font_google   = google_font("Source Code Pro"),
+  title_slide_background_image = "assets/blueprint.jpg"
 )
 ```
 
@@ -83,7 +84,7 @@ collection**."
 
 .center[
 
-### `r emo::ji("sparkles") `Harnessing the power of Convention! `r emo::ji("sparkles")`
+### `r emo::ji("sparkles")` Harnessing the power of Convention! `r emo::ji("sparkles")`
 
 <img src="assets/package_friends.png" height=200px>
 ]
@@ -132,7 +133,7 @@ class: inverse, center, middle
 ---
 class: inverse, center, middle
 
-# Skipped setup
+# Setup
 
 ---
 
@@ -164,7 +165,7 @@ install.packages(c(
     #' analysis
     "dplyr", "ggplot2", "ggthemes", "here",
     #' bibliographic / publishing
-    "citr", "rticles",
+    "citr", "rticles", "rmarkdown",
     #' documentation
     "roxygen2",
     #' graphics
@@ -175,6 +176,19 @@ install.packages(c(
 
 ```{r, eval=FALSE}
 remotes::install_github("benmarwick/rrtools")
+```
+
+---
+
+## Opened Rstudio
+
+in project `rrtools-rse19` ([bit.ly/rrtools-rse19](http://bit.ly/rrtools-rse19))
+
+### loaded some libraries
+```r
+library(rrtools)
+library(usethis)
+library(testthat)
 ```
 
 ---
@@ -197,22 +211,80 @@ usethis::use_course("bit.ly/rrtools_wks")
 
 
 ---
-## Opened Rstudio
+## `analysis.R`
 
-in project [`rrtools-rse19`](https://github.com/annakrystalli/rrtools-rse19)
-
-### loaded some libraries
-```r
-library(rrtools)
-library(usethis)
-library(testthat)
+### Load Libraries
+```{r, message=FALSE}
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(ggthemes)
 ```
 
+### Set theme
+```{r,  message=FALSE}
+theme_set(theme_grey())
+```
+
+---
+
+## `analysis.R`
+
+### Load and process data
+
+```{r,  message=FALSE}
+# create colour palette
+colours <- ptol_pal()(2)
+
+# load-data
+data <- read_csv(here::here("gillespie.csv"), col_types = "cdiddd")  
+
+# recode-data
+data <- data %>% 
+  mutate(system_size = recode(system_size, 
+                              large = "A. 1000 total sites", 
+                              small = "B. 100 total sites")) 
+```
+---
+
+## `analysis.R`
+
+### plot
+
+```{r,  message=FALSE, warning=FALSE, eval=FALSE}
+# plot-gillespie
+data %>%
+  ggplot(aes(x = time)) + 
+  geom_hline(aes(yintercept = mean), lty=2, col=colours[2]) + 
+  geom_hline(aes(yintercept = minus_sd), lty=2, col=colours[2]) + 
+  geom_hline(aes(yintercept = plus_sd), lty=2, col=colours[2]) + 
+  geom_line(aes(y = n), col=colours[1]) +
+  facet_wrap(~system_size, scales = "free_y") 
+
+```
+
+---
+
+## `analysis.R`
+
+### plot
+
+```{r,  message=FALSE, warning=FALSE, echo=FALSE}
+# plot-gillespie
+data %>%
+  ggplot(aes(x = time)) + 
+  geom_hline(aes(yintercept = mean), lty=2, col=colours[2]) + 
+  geom_hline(aes(yintercept = minus_sd), lty=2, col=colours[2]) + 
+  geom_hline(aes(yintercept = plus_sd), lty=2, col=colours[2]) + 
+  geom_line(aes(y = n), col=colours[1]) +
+  facet_wrap(~system_size, scales = "free_y") 
+
+```
 
 ---
 class: inverse, center, middle
 
-# Relevant global user settings
+## global user settings
 
 ---
 
@@ -271,7 +343,7 @@ class: inverse, center, middle
 
 # Let's go! `r emo::ji("checkered_flag")`
 
-
+### follow along at .backtick[workflow.R]
 ---
 
 # Demo Links
@@ -303,3 +375,12 @@ class: inverse, center, middle
 class: inverse, center, middle
 
 # Thanks for `r emo::ji("eyes")` `r emo::ji("wave")`
+
+---
+class: bottom
+
+# Acknowledgements
+
+- slides made using `r emo::ji("package")` [xaringan](https://github.com/yihui/xaringan) & [xaringanthemer](https://github.com/gadenbuie/xaringanthemer)
+- title slide background image by <a href="https://pixabay.com/users/icame-2431734/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2432266">Isaín Calderón</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2432266">Pixabay</a>
+

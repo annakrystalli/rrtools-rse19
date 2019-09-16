@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
   <head>
-    <title>Reproducible Research in R w/ rrtools</title>
+    <title>Reproducible Research in R w/ .backtick[rrtools]</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Anna Krystalli" />
+    <link href="libs/font-awesome-animation-1.0/font-awesome-animation-emi.css" rel="stylesheet" />
+    <script src="libs/fontawesome-5.0.13/js/fontawesome-all.min.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="assets/custom.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Reproducible Research in R w/ rrtools
-## harnessing the power of convention ✨
-### <em>Anna Krystalli</em>
-### <em>3rd UK RSE Conference, 2019-09-17</em>
+# Reproducible Research in R w/ .backtick[rrtools]
+## <p>.small.white[Harnessing the power of Convention]</p>
+## ✨
+### <p>.left.small.white[_Anna Krystalli  <span>&lt;i class="fab  fa-twitter faa-float animated "&gt;&lt;/i&gt;@annakrystalli</span></p>
+.left[3rd UK RSE Conference, 2019-09-17]_]
 
 ---
 
@@ -80,7 +83,7 @@ collection**."
 
 .center[
 
-### ✨Harnessing the power of Convention! ✨
+### ✨ Harnessing the power of Convention! ✨
 
 &lt;img src="assets/package_friends.png" height=200px&gt;
 ]
@@ -129,7 +132,7 @@ class: inverse, center, middle
 ---
 class: inverse, center, middle
 
-# Skipped setup
+# Setup
 
 ---
 
@@ -163,7 +166,7 @@ install.packages(c(
     #' analysis
     "dplyr", "ggplot2", "ggthemes", "here",
     #' bibliographic / publishing
-    "citr", "rticles",
+    "citr", "rticles", "rmarkdown",
     #' documentation
     "roxygen2",
     #' graphics
@@ -175,6 +178,19 @@ install.packages(c(
 
 ```r
 remotes::install_github("benmarwick/rrtools")
+```
+
+---
+
+## Opened Rstudio
+
+in project `rrtools-rse19` ([bit.ly/rrtools-rse19](http://bit.ly/rrtools-rse19))
+
+### loaded some libraries
+```r
+library(rrtools)
+library(usethis)
+library(testthat)
 ```
 
 ---
@@ -197,22 +213,73 @@ usethis::use_course("bit.ly/rrtools_wks")
 
 
 ---
-## Opened Rstudio
+## `analysis.R`
 
-in project [`rrtools-rse19`](https://github.com/annakrystalli/rrtools-rse19)
+### Load Libraries
 
-### loaded some libraries
 ```r
-library(rrtools)
-library(usethis)
-library(testthat)
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(ggthemes)
 ```
 
+### Set theme
+
+```r
+theme_set(theme_grey())
+```
+
+---
+
+## `analysis.R`
+
+### Load and process data
+
+
+```r
+# create colour palette
+colours &lt;- ptol_pal()(2)
+
+# load-data
+data &lt;- read_csv(here::here("gillespie.csv"), col_types = "cdiddd")  
+
+# recode-data
+data &lt;- data %&gt;% 
+  mutate(system_size = recode(system_size, 
+                              large = "A. 1000 total sites", 
+                              small = "B. 100 total sites")) 
+```
+---
+
+## `analysis.R`
+
+### plot
+
+
+```r
+# plot-gillespie
+data %&gt;%
+  ggplot(aes(x = time)) + 
+  geom_hline(aes(yintercept = mean), lty=2, col=colours[2]) + 
+  geom_hline(aes(yintercept = minus_sd), lty=2, col=colours[2]) + 
+  geom_hline(aes(yintercept = plus_sd), lty=2, col=colours[2]) + 
+  geom_line(aes(y = n), col=colours[1]) +
+  facet_wrap(~system_size, scales = "free_y") 
+```
+
+---
+
+## `analysis.R`
+
+### plot
+
+![](intro-slides_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
 
 ---
 class: inverse, center, middle
 
-# Relevant global user settings
+## global user settings
 
 ---
 
@@ -271,7 +338,7 @@ class: inverse, center, middle
 
 # Let's go! 🏁
 
-
+### follow along at .backtick[workflow.R]
 ---
 
 # Demo Links
@@ -303,6 +370,14 @@ class: inverse, center, middle
 class: inverse, center, middle
 
 # Thanks for 👀 👋
+
+---
+class: bottom
+
+# Acknowledgements
+
+- slides made using 📦 [xaringan](https://github.com/yihui/xaringan) &amp; [xaringanthemer](https://github.com/gadenbuie/xaringanthemer)
+- title slide background image by &lt;a href="https://pixabay.com/users/icame-2431734/?utm_source=link-attribution&amp;amp;utm_medium=referral&amp;amp;utm_campaign=image&amp;amp;utm_content=2432266"&gt;Isaín Calderón&lt;/a&gt; from &lt;a href="https://pixabay.com/?utm_source=link-attribution&amp;amp;utm_medium=referral&amp;amp;utm_campaign=image&amp;amp;utm_content=2432266"&gt;Pixabay&lt;/a&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

@@ -93,8 +93,8 @@ a, a > code {
 }
 .title-slide {
   background-color: #3C989E;
-  
-  
+  background-image: url(assets/blueprint.jpg);
+  background-size: cover;
   
 }
 .title-slide .remark-slide-number {

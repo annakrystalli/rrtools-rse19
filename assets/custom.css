@@ -1,0 +1,26 @@
+/* Extra CSS */
+.remark-inline-code inverse {
+  color: red;
+}
+.small {
+  font-size: 80%;
+}
+.white {
+  color: #123a3a;
+}
+
+.title-slide img {
+    opacity: 0.2;
+}
+
+.inverse h1 {
+    color: #050F0F;
+    background-color: rgba(60, 152, 158, 0.85);
+    border-radius: 8px;
+    padding: 8px;
+    margin: 2px 8px 2px 0;
+}
+
+.backtick {
+  font-family: Source Code Pro, 'Lucida Console', Monaco, monospace;
+}

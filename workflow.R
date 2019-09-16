@@ -9,10 +9,9 @@ library(testthat)
 
 #'  # Create compendium 
 rrtools::use_compendium("~/Desktop/rrcompendium")
-#' ## Collect initial metadata: INSPECT
-#' Fill in DESCRIPTION
+#' ## INSPECT: initial description
 #' > PASTE initial metadata
-#' ### Build!
+#' ### Build
 citation("rrcompendium")
 #'
 #'  ## Add License 
@@ -61,51 +60,19 @@ rmarkdown::draft("analysis/paper.Rmd", template = "elsevier_article", package = 
 #' - references
 #' 
 #' ## Add references & maths
-#' - Add a couple, render and inspect
-#' - Add mathematical notations around formula
+#' - Add a couple of references,
+#' - RENDER: inspect
 #' 
-#' - paste paper-02.Rmd
-#' - render and inspect maths around formula and references
+#' - Add mathematical notations around formula
+#' - PASTE paper-02.Rmd
+#' - RENDER: inspect:
+#'  -  maths around formula 
+#'  - references
 #' 
 #'  ##' Add code
 #'  
-#'  Paste the three chunks
-#'  Run code to see output
-#'  Re-run data read code
-
-#' Copy code to turn into function
-#' ```r
-#' data %>%
-#' dplyr::mutate(system_size = dplyr::recode(system_size,
-#'                                           large = "A. 1000 total sites",
-#'                                           small = "B. 100 total sites"))
-#' ```
-usethis::use_r("process-data")
-#' check
-#' - using functions without specifying namespace
-#' - no documentation
-#' 
-#' Document
-#' 
-#' - Insert Roxygen skeleton
-#' 
-#' - Give title
-#' - define parameter
-#' - define return
-#' - importing
-#' 
-#' - DOCUMENT
-#' - CHECK
-
-#' - Build
-
-usethis::use_test("process-data")
-#' In test-precess-data.R, create some test_data by subsetting the data set
-head(data, 2) %>% dput()
-expect_equal(sort(recode_sys_size(test_data)$system_size),
-             c("A. 1000 total sites", "B. 100 total sites"))
-
-#' test package!
+#'  - PASTE the three chunks
+#'  RENDER
 
 #' # Capture computational environment
 #' ## Record dependencies
@@ -120,4 +87,5 @@ rrtools::use_travis()
 #' On successull build and tests, TRAVIS pushes a Docker image to DockerHub
 #' synch and turn on travis
 #' See latest image on dockerhub <https://hub.docker.com/r/akrystalli/rrcompendiumrse19/tags>
+#' See final compendium at <>
 
