@@ -87,5 +87,5 @@ rrtools::use_travis()
 #' On successull build and tests, TRAVIS pushes a Docker image to DockerHub
 #' synch and turn on travis
 #' See latest image on dockerhub <https://hub.docker.com/r/akrystalli/rrcompendiumrse19/tags>
-#' See final compendium at <>
+#' See final compendium at <https://github.com/annakrystalli/rrcompendiumRSE19>
 
