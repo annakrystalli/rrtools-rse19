@@ -269,7 +269,7 @@ data %>%
 
 ### plot
 
-```{r,  message=FALSE, warning=FALSE, echo=FALSE}
+```{r,  message=FALSE, warning=FALSE, echo=FALSE, dev="svg", fig.width=7, fig.height=3.5}
 # plot-gillespie
 data %>%
   ggplot(aes(x = time)) + 
