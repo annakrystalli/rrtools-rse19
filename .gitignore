@@ -9,3 +9,5 @@ resources/*.spl
 resources/*.fff
 .DS_Store
 analysis/*
+dev.R
+gillespie.csv
